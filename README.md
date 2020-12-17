@@ -37,9 +37,72 @@ SUBSYSTEM=="leds", ACTION=="add", \
   RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
 ```
 
-Or change the file mode bits, to do so, run these commands:
-- `sudo chmod 777 /sys/class/leds/smc::kbd_backlight/brightness`
-- `sudo chmod 777 /sys/class/backlight/nv_backlight/brightness`
+Or Create/Add these commands to `/etc/rc.local` file to change the backlight file mode bits:
+```
+# /etc/rc.local
+.
+.
+.
+chmod 777 /sys/class/leds/smc::kbd_backlight/brightness
+chmod 777 /sys/class/backlight/nv_backlight/brightness
+.
+.
+. exit 0
+```
+
+> Note: If you dont have /etc/rc.local file and rc-local.service (Check by executing `sudo systemctl status rc-local`), follow these steps to create one or both files:
+
+1. Create `/etc/rc.local` file by running `sudo vim /etc/rc.local` and paste these:
+```
+# /etc/rc.local
+
+#!/bin/sh -e
+#
+# rc.local
+#
+# This script is executed at the end of each multiuser runlevel.
+# Make sure that the script will "exit 0" on success or any other
+# value on error.
+#
+# In order to enable or disable this script just change the execution
+# bits.
+#
+# By default this script does nothing.
+
+# <Add terminal commands here without sudo>
+chmod 777 /sys/class/leds/smc::kbd_backlight/brightness
+chmod 777 /sys/class/backlight/nv_backlight/brightness
+
+exit 0
+```
+
+2. Make the file executable using `sudo chmod +x /etc/rc.local`
+
+3. If you don't have `rc-local` service too, then:
+
+    a.  Create one by executing `sudo vim /etc/systemd/system/rc-local.service` and paste these
+
+     ```
+        # /etc/systemd/system/rc-local.service
+
+        [Unit]
+        Description=/etc/rc.local Compatibility
+        ConditionPathExists=/etc/rc.local
+
+        [Service]
+        Type=forking
+        ExecStart=/etc/rc.local start
+        TimeoutSec=0
+        StandardOutput=tty
+        RemainAfterExit=yes
+        SysVStartPriority=99
+
+        [Install]
+        WantedBy=multi-user.target
+  
+     ```
+     b.  Enable it to start with system by running `sudo systemctl enable rc-local` and reboot. Check the status of your service file by executing `sudo systemctl status rc-local`.
+
 
 ## Usage
 
