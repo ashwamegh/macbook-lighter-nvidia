@@ -1,8 +1,8 @@
 set -e
 
-device='/sys/class/backlight/intel_backlight/brightness'
+device='/sys/class/backlight/nv_backlight/brightness'
 current=`cat $device`
-max=`cat /sys/class/backlight/intel_backlight/max_brightness`
+max=`cat /sys/class/backlight/nv_backlight/max_brightness`
 
 screen_help () {
     echo 'Usage: macbook-lighter-screen <OPTION> [NUM]'
