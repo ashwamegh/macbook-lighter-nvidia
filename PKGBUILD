@@ -1,17 +1,17 @@
 # Maintainer: harttle <yangjvn@126.com>
 # Inspired by lighter, many thanks to Janhouse's perl script https://github.com/Janhouse/lighter
-pkgname=macbook-lighter
+pkgname=macbook-lighter-nvidia
 pkgver=v0.0.2.5.g112c1f0
 pkgrel=1
 pkgdesc="Macbook screen/keyboard backlight CLI and auto-adjust on ambient light"
 arch=(any)
-url="https://github.com/harttle/macbook-lighter"
+url="https://github.com/ashwamegh/macbook-lighter-nvidia"
 license=('GPL')
 depends=('bc')
 makedepends=('git')
 provides=()
 conflicts=()
-source=('git+https://github.com/harttle/macbook-lighter.git')
+source=('git+https://github.com/ashwamegh/macbook-lighter-nvidia.git')
 md5sums=('SKIP')
 
 pkgver() {
