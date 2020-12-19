@@ -1,6 +1,6 @@
 [Unit]
-Description=Macbook screen backlight on the ambient light
-Documentation=https://github.com/harttle/macbook-lighter
+Description=Macbook screen backlight on the ambient light with nvidia graphic card
+Documentation=https://github.com/ashwamegh/macbook-lighter-nvidia
 
 [Service]
 Type=simple

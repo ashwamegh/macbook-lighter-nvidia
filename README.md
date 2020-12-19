@@ -12,7 +12,7 @@
 
 ## Description
 
-MacBook keyboard and screen backlight adjust on the ambient light.
+MacBook keyboard and screen backlight adjust on the ambient light with nvidia graphic card.
 Internally, macbook-lighter-nvidia reads the following files:
 
 ```bash
@@ -53,6 +53,8 @@ SUBSYSTEM=="leds", ACTION=="add", \
   RUN+="/bin/chgrp video /sys/class/leds/%k/brightness", \
   RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
 ```
+
+<br/>
 
 <u>__Method: 2__</u>
 Create/Add these commands to `/etc/rc.local` file to change the backlight file mode bits:

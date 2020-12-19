@@ -1,5 +1,5 @@
-# Maintainer: harttle <yangjvn@126.com>
-# Inspired by lighter, many thanks to Janhouse's perl script https://github.com/Janhouse/lighter
+# Maintainer: ashwamegh <shashank7200@gmail.com>
+# Inspired by macbook-lighter, many thanks to Jun Yang's package https://github.com/harttle/macbook-lighter
 pkgname=macbook-lighter-nvidia
 pkgver=v0.0.2.5.g112c1f0
 pkgrel=1
