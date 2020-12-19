@@ -2,28 +2,45 @@
 
 # macbook-lighter-nvidia
 
-MacBook keyboard and screen backlight adjust on the ambient light.
-Internally, macbook-lighter reads the following files:
+## Table of Contents
 
-* /sys/devices/platform/applesmc.768/light
-* /sys/class/backlight/nv_backlight/brightness
-* /sys/class/backlight/nv_backlight/max_brightness
-* /sys/class/leds/smc::kbd_backlight/brightness
-* /sys/class/leds/smc::kbd_backlight/max_brightness
+- [Description](#description)
+- [Setup](#setup)
+- [Usage](#usage)
+- [Tested Versions](#tested%20versions)
+- [License](#license)
+
+## Description
+
+MacBook keyboard and screen backlight adjust on the ambient light.
+Internally, macbook-lighter-nvidia reads the following files:
+
+```bash
+# /sys/devices/platform/applesmc.768/light
+# /sys/class/backlight/nv_backlight/brightness
+# /sys/class/backlight/nv_backlight/max_brightness
+# /sys/class/leds/smc::kbd_backlight/brightness
+# /sys/class/leds/smc::kbd_backlight/max_brightness
+```
 
 So you're expected to install corresponding Nvidia/Intel drivers first.
 
 ## Setup
 
-All commands including macbook-lighter-kbd, macbook-lighter-screen
-will be available with sudo privilege once macbook-lighter-nvidia finished install.
+### <u>With `sudo`</u>
+
+> All commands including macbook-lighter-kbd, macbook-lighter-screen will be available with sudo privilege once macbook-lighter-nvidia finished install.
+
+### <u>Without `sudo`</u>
+
+<u>__Method: 1__</u>
 
 To use in non-root environment such as [xbindkeys](https://wiki.archlinux.org/index.php/Xbindkeys),
 it's recommended to setup an "udev" rule to allow users in the
 "video" group to set the backlights.
 Place a file /etc/udev/rules.d/90-backlight.rules containing:
 
-```
+```bash
 SUBSYSTEM=="backlight", ACTION=="add", \
   RUN+="/bin/chgrp video /sys/class/backlight/%k/brightness", \
   RUN+="/bin/chmod g+w /sys/class/backlight/%k/brightness"
@@ -31,14 +48,16 @@ SUBSYSTEM=="backlight", ACTION=="add", \
 
 And a file /etc/udev/rules.d/91-leds.rules containing:
 
-```
+```bash
 SUBSYSTEM=="leds", ACTION=="add", \
   RUN+="/bin/chgrp video /sys/class/leds/%k/brightness", \
   RUN+="/bin/chmod g+w /sys/class/leds/%k/brightness"
 ```
 
-Or Create/Add these commands to `/etc/rc.local` file to change the backlight file mode bits:
-```
+<u>__Method: 2__</u>
+Create/Add these commands to `/etc/rc.local` file to change the backlight file mode bits:
+
+```bash
 # /etc/rc.local
 .
 .
@@ -53,7 +72,8 @@ chmod 777 /sys/class/backlight/nv_backlight/brightness
 > Note: If you dont have /etc/rc.local file and rc-local.service (Check by executing `sudo systemctl status rc-local`), follow these steps to create one or both files:
 
 1. Create `/etc/rc.local` file by running `sudo vim /etc/rc.local` and paste these:
-```
+
+```bash
 # /etc/rc.local
 
 #!/bin/sh -e
@@ -82,7 +102,7 @@ exit 0
 
     a.  Create one by executing `sudo vim /etc/systemd/system/rc-local.service` and paste these
 
-     ```
+     ```bash
         # /etc/systemd/system/rc-local.service
 
         [Unit]
@@ -119,6 +139,11 @@ systemctl start macbook-lighter
 macbook-lighter-ambient
 ```
 
-## Tested MacBook Versions
+## Tested Versions
 
 * MacBook Pro Mid 2010 13" (7,1)
+
+
+## License
+
+[MIT License](/LICENSE)
